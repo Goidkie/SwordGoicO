@@ -4,42 +4,113 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="Vue.js"></script>
+    <script type="text/javascript" src="../Fold/vue.js"></script>
     <title>Document</title>
 </head>
 <body>
     <div id="root">
-        <h2 :style="{opacity}">欢迎学习Vue</h2>
+        <button></button>
+        <button @click="changeSex">修改性别</button><br/>
+        <button @click="addAge">年龄增加</button>
+        <button @click="addSex">加入性别</button><br/>
+        <button @click="changeHobby">修改爱好为开车</button>
+        <button @click="addFriend">加入一个朋友</button>
+        <button @click="updateFriendFirstName">修改第一个朋友为张三</button><br/>
+        <button @click.once="addAnHobby">添加一个爱好</button>
+        <input v-show="ui" placeholder="请你输入朋友名字" v-model="student.friendName">
+        <input v-show="ui" aria-placeholder="请你输入朋友年龄" v-model="student.friendAge" @keyup.enter="addUi">
+        <h2>姓名：{{student.name}}</h2>
+        <h3>年龄：{{student.age}}</h3>
+        <h3 v-if="student.sex">性别为：{{student.sex}}</h3>
+        <h3>爱好：</h3>
+        <ul>
+            <li v-for="(h,index) in student.hobby" :key="index">
+                {{h}}
+            </li>
+        </ul>
+        <h3>朋友们：</h3>
+        <ul>
+            <li v-for="(h,index) in student.friends" :key="index">
+                {{h.name}} -- {{h.age}}
+            </li>
+        </ul>
     </div>
+
     <script type="text/javascript">
         Vue.config.productionTip = false
-        const vm = new Vue ({
+        const vm = new Vue({
             el:'#root',
             data:{
-                n:1,
-                opacity:1
+                student:{
+                    name:'Tom',
+                    age:18,
+                    hobby:['羽毛球','足球','计算机'],
+                    friends:[
+                        {name:'Jerry',age:35},
+                        {name:'Smitch',age:29},
+                        {name:'Marry',age:17},
+                        {name:'Mike',age:23},
+                    ],
+                    changeFriendInfo:false,
+                    friendName:'',
+                    friendAge:'',
+                },
+                ui:false
             },
-            //从Vue完成模板的解析并把初始的真实DOM元素放入页面后
-            //（挂载完毕）调用mounted
-            mounted(){
-                console.log('mounted',this)
-                setInterval(() => {
-                    this.opacity -= 0.01
-                    if(this.opacity <= 0)
-                    {
-                        this.opacity = 1
-                    }
-                },16)
-            }
-        })
 
-        //setInterval(() => {
-        //    vm.opacity -= 0.009
-        //    if(vm.opacity <= 0) {
-        //        vm.opacity = 1
-        //    }
-        //    console.log('变化了')
-        //},16)
-    </script>
+            watch:{
+                //immediate:true,
+                'ui':function(newValue,oldValue){
+                    if(oldValue !== true)
+                    {
+                        alert('请你输入')
+                    }
+                }
+            },
+
+            methods:{
+                addAge(){  
+                    if(this.student.age <= 100)
+                    {
+                        this.student.age += 1
+                    }
+                },
+                addSex(){
+                    // Vue.set(this.student,'sex','男')
+                    this.$set(this.student,'sex','男')
+                    
+                },
+                changeSex(){
+                    if(this.student.sex)
+                    {
+                        this.student.sex = this.student.sex === '男' ? '女' : '男'                        
+                    }
+                },
+                changeHobby(){
+                    this.student.hobby.shift()
+                    this.student.hobby.unshift('开车')
+                },
+                addFriend(){
+                    this.ui = true
+                    this.student.friends.unshift({name:'jack',age:56})
+                },
+                updateFriendFirstName(){
+                    this.student.friends[0].name = '张三'
+                    this.student.friends[0].age = 45
+                },
+                addAnHobby(){
+                    this.student.hobby.unshift('写程序')
+                },
+                addUi(){
+                    n1 = this.student.friendName
+                    n2 = this.student.friendAge
+                    this.student.friends.unshift({name:n1,age:n2})
+                    this.ui=false
+                }
+            },
+
+
+        })
+    </script> 
 </body>
 </html>
