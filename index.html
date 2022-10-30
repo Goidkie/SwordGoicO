@@ -1,115 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="Vue.js"></script>
-    <title>Document</title>
+    <title>Emoji</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
 </head>
+
 <body>
-    <div id="root">
-        <button @click="changeSex">修改性别</button><br/>
-        <button @click="addAge">年龄增加</button>
-        <button @click="addSex">加入性别</button><br/>
-        <button @click="changeHobby">修改爱好为开车</button></br>
-        <button @click="addFriend">加入一个朋友</button>
-        <button @click="updateFriendFirstName">修改第一个朋友为张三</button><br/>
-        <button @click.once="addAnHobby">添加一个爱好</button>
-        <input v-show="ui" placeholder="请你输入朋友名字" v-model="student.friendName">
-        <input v-show="ui" aria-placeholder="请你输入朋友年龄" v-model="student.friendAge" @keyup.enter="addUi">
-        <h2>姓名：{{student.name}}</h2>
-        <h3>年龄：{{student.age}}</h3>
-        <h3 v-if="student.sex">性别为：{{student.sex}}</h3>
-        <h3>爱好：</h3>
-        <ul>
-            <li v-for="(h,index) in student.hobby" :key="index">
-                {{h}}
-            </li>
-        </ul>
-        <h3>朋友们：</h3>
-        <ul>
-            <li v-for="(h,index) in student.friends" :key="index">
-                {{h.name}} -- {{h.age}}
-            </li>
-        </ul>
+    <div class="container">
+        <div class="face">
+            <div class="eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+        <div class="hat-container">
+            <div class="hat">
+            </div>
+            <div class="hat-peak"></div>
+        </div>
     </div>
 
-    <script type="text/javascript">
-        Vue.config.productionTip = false
-        const vm = new Vue({
-            el:'#root',
-            data:{
-                student:{
-                    name:'Tom',
-                    age:18,
-                    hobby:['羽毛球','足球','计算机'],
-                    friends:[
-                        {name:'Jerry',age:35},
-                        {name:'Smitch',age:29},
-                        {name:'Marry',age:17},
-                        {name:'Mike',age:23},
-                    ],
-                    changeFriendInfo:false,
-                    friendName:'',
-                    friendAge:'',
-                },
-                ui:false
-            },
-
-            watch:{
-                //immediate:true,
-                'ui':function(newValue,oldValue){
-                    if(oldValue !== true)
-                    {
-                        alert('请你输入')
-                    }
-                }
-            },
-
-            methods:{
-                addAge(){  
-                    if(this.student.age <= 100)
-                    {
-                        this.student.age += 1
-                    }
-                },
-                addSex(){
-                    // Vue.set(this.student,'sex','男')
-                    this.$set(this.student,'sex','男')
-                    
-                },
-                changeSex(){
-                    if(this.student.sex)
-                    {
-                        this.student.sex = this.student.sex === '男' ? '女' : '男'                        
-                    }
-                },
-                changeHobby(){
-                    this.student.hobby.shift()
-                    this.student.hobby.unshift('开车')
-                },
-                addFriend(){
-                    this.ui = true
-                    this.student.friends.unshift({name:'jack',age:56})
-                },
-                updateFriendFirstName(){
-                    this.student.friends[0].name = '张三'
-                    this.student.friends[0].age = 45
-                },
-                addAnHobby(){
-                    this.student.hobby.unshift('写程序')
-                },
-                addUi(){
-                    n1 = this.student.friendName
-                    n2 = this.student.friendAge
-                    this.student.friends.unshift({name:n1,age:n2})
-                    this.ui=false
-                }
-            },
-
-
-        })
-    </script> 
+    <script>
+        document.querySelector("body")
+            .addEventListener("mousemove", eyeball);
+        function eyeball() {
+            var eye = document.querySelectorAll(".eye");
+            eye.forEach(eye => {
+                let x = (eye.getBoundingClientRect()
+                    .left) + (eye.clientWidth / 2);
+                let y = (eye.getBoundingClientRect()
+                    .top) + (eye.clientHeight / 2);
+                let radian = Math.atan2(event.pageX -
+                    x, event.pageY - y);
+                let rot = (radian * (180 / Math.PI) *
+                    -1) + 270;
+                eye.style.transform = "rotate(" + rot
+                    + "deg)";
+            });
+        }
+    </script>
 </body>
+
 </html>
