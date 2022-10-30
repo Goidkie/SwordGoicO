@@ -1,3 +1,76 @@
-<p>Hello 大家好</p>
-<p>I am GoicO </p>
-<p>欢迎你来到这里</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../Fold/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <!-- 表单提交后阻止默认行为 -->
+        <form @submit.prevent="demo">
+            账号：<input type="text" v-model.trim="userInfo.account"> <br/>
+            年龄：<input type="number" v-model.number="userInfo.age"> <br/>
+            密码：<input type="text" v-model="userInfo.password"> <br/><br/>
+
+            性别：<br/>
+            男 <input type="radio" name="sex" v-model="userInfo.sex" value="male"> <br/>
+            女 <input type="radio" name="sex" v-model="userInfo.sex" value="female"> <br/>
+
+            爱好：<br/>
+            学习 <input type="checkbox" v-model="userInfo.hobby" value="study"> <br/>
+            羽毛球 <input type="checkbox" v-model="userInfo.hobby" value="badminton"> <br/>
+            计算机 <input type="checkbox" v-model="userInfo.hobby" value="computer"> <br/>
+            足球 <input type="checkbox" v-model="userInfo.hobby" value="soccer"> <br/>
+            <br/>
+            <br/>
+
+            所属校区：
+            <select v-model="userInfo.city">
+                <option value="">请选择校区</option>
+                <option value="dong">东校区</option>
+                <option value="heyuan">河源校区</option>
+                <option value="baiyun">白云校区</option>
+                <option value="bei">北校区</option>
+                <option value="xi">西校区</option>
+            </select>
+            <br/><br/>
+
+            其他信息：
+            <textarea v-model.lazy="userInfo.info"></textarea>
+            <br/><br/>
+            <input type="checkbox" v-model="userInfo.agree">阅读并接受<a href="">《用户协议》</a>
+            <br/>
+            <button >提交</button> 
+            <!-- 表单只要提交，就触发form的submit -->
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+       const vm = new Vue({
+            el:'#root',
+            data:{
+                userInfo:{
+                    account:'',
+                    password:'',
+                    age:'',
+                    sex:'',
+                    hobby:[],
+                    city:'',
+                    info:'',
+                    agree:'',
+                }
+            },
+            methods:{
+                demo(){
+                    console.log(JSON.stringify(this.userInfo))
+                }
+            }
+       }) 
+    </script>
+</body>
+</html>
