@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>滚动切换背景页面</title>
+  <style>
+    body {
+      height: 3000px; /* 设置页面高度以便滚动 */
+      transition: background 0.5s ease; /* 添加背景过渡效果 */
+    }
+
+    .background1 {
+      background-color: #f1f1f1;
+    }
+
+    .background2 {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+<script>
+  // 使用JavaScript监听鼠标滚动事件
+  window.addEventListener('scroll', function() {
+    // 获取滚动距离
+    var scrollPosition = window.scrollY || window.pageYOffset;
+
+    // 定义背景切换的阈值（您可以根据需要进行调整）
+    var threshold = 500;
+
+    // 根据滚动位置切换背景样式
+    if (scrollPosition > threshold) {
+      document.body.classList.add('background2');
+      document.body.classList.remove('background1');
+    } else {
+      document.body.classList.add('background1');
+      document.body.classList.remove('background2');
+    }
+  });
+</script>
+</body>
+</html>
+
+

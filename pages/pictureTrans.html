@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>滚动展示图片</title>
+  <style>
+    body {
+      height: 3000px; /* 设置页面高度以便滚动 */
+      transition: background 0.5s ease; /* 添加页面过渡效果 */
+    }
+    .bu1{
+      background-image: url(../images/wallhaven-jxegg5_1920x1080.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .bu2{
+      background-image: url(../images/wallhaven-3lwek6_1920x1080.png);
+      background-repeat: no-repeat;
+      background-size: 1800px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <img id="myImage" class="hidden" src="../images/wallhaven-d66gq3_1920x1080.png" alt="展示的图片" style="width:300px">
+
+<script>
+  // 使用JavaScript监听鼠标滚动事件
+  window.addEventListener('scroll', function() {
+    // 获取滚动距离
+    var scrollPosition = window.scrollY || window.pageYOffset;
+
+    // 定义展示图片的阈值（您可以根据需求进行调整）
+    var threshold = 500;
+
+    console.log(document.body.classList.item(0))
+
+    // 检查滚动位置是否超过阈值
+    if (scrollPosition > threshold) {
+      // 显示图片
+      // document.getElementById('myImage').classList.remove('hidden');
+      document.body.classList.add('bu1');
+      document.body.classList.remove('bu2');
+    }
+    else
+    {
+      document.body.classList.remove('bu1');
+      document.body.classList.add('bu2');
+    }
+
+  });
+</script>
+</body>
+</html>

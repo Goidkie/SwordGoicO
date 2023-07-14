@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Co th iiu</title>
+  <style>
+    body {
+      height: 100vh; /* 设置页面高度为视窗高度以保持页面不滚动 */
+      background-image: url("../images/wallhaven-d66gq3_1920x1080.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: background-image 1.0s ease; /* 添加背景切换的过渡效果 */
+    }
+  </style>
+</head>
+<body>
+<script>
+  // 使用JavaScript监听鼠标滚动事件
+  let currentIndex = 3
+  window.addEventListener('wheel', function(event) {
+    // 阻止默认的滚动行为
+    event.preventDefault();
+
+    // 获取滚动方向，根据需要进行调整
+    var delta = event.deltaY || event.detail || event.wheelDelta;
+
+    // 定义多个背景图片URL（根据需要进行调整）
+    var backgroundImageUrls = [
+      'url("../images/wallhaven-jxegg5_1920x1080.png")',
+      'url("../images/wallhaven-d66gq3_1920x1080.png")',
+      'url("../images/wallhaven-3lwek6_1920x1080.png")',
+      'url("../images/yasuo.jpg")',
+      'url("../images/1.jpg")',
+      'url("../images/2.jpg")'
+    ];
+
+    // 获取当前背景图片URL
+    // var currentBackgroundImageUrl = window.getComputedStyle(document.body).backgroundImage;
+    // var currentIndex = backgroundImageUrls.indexOf(currentBackgroundImageUrl);
+    console.log(event.deltaY)
+
+    // 切换背景图片
+    if (delta > 0) {
+      // 滚动向下，切换到下一张图片
+      currentIndex = (currentIndex + 1) % backgroundImageUrls.length;
+    } else {
+      // 滚动向上，切换到上一张图片
+      currentIndex = (currentIndex - 1 + backgroundImageUrls.length) % backgroundImageUrls.length;
+    }
+    console.log(currentIndex)
+    // 设置新的背景图片
+    document.body.style.backgroundImage = backgroundImageUrls[currentIndex];
+  },{passive:false});
+</script>
+</body>
+</html>
